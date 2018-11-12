@@ -1,6 +1,12 @@
 # Get base OS
 FROM alpine:3.8
 
+# Environment
+# Name of the bind user
+ENV BIND_USER named
+# Directory in which all bind config is saved
+ENV BIND_CONFIG_DIR /config/bind 
+
 # Update and install bind
 RUN apk --update add bind
 

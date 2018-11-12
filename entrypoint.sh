@@ -3,10 +3,6 @@
 set -e
 
 set_environment_variable_defaults() {
-  # Name of the bind user
-  BIND_USER=${BIND_USER:-named}
-  # Directory in which all bind config is saved
-  BIND_CONFIG_DIR=${BIND_CONFIG_DIR:-/config/bind} 
   # Source of the initial bind configuration (/etc/bind). Values
   ## - alpine:  use files shipped with alpine 
   ## - image:   use files shipped with image (image/etc/bind)

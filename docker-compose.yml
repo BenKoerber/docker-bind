@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+
+  bind:
+    image: benkoerber/docker-bind
+    restart: always
+    ports:
+     - ${BIND_PORTS}
+    volumes:
+     - ${CONFIG_DIR}/bind/:/config/bind
