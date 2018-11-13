@@ -4,8 +4,9 @@ services:
 
   bind:
     image: benkoerber/docker-bind
-    #restart: always
+    restart: always
     ports:
-    - ${BIND_PORTS}
+    - ${BIND_PORTS_TCP}
+    - ${BIND_PORTS_UDP}
     volumes:
     - ${CONFIG_DIR}/bind:/config/bind

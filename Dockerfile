@@ -10,7 +10,8 @@ ENV BIND_DIR /config/bind
 ENV BIND_TEMPLATE_IMAGE_DIR /config/template/image/etc/bind
 
 # Update and install bind
-RUN apk --update add bind
+RUN apk --update add 	bind \
+						bind-tools
 
 # Copy image files to container
 COPY image/etc/bind/* /config/template/image/etc/bind/

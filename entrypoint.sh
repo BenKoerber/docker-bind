@@ -43,7 +43,6 @@ create_bind_dirs() {
   # set permissions and ownership
   chmod -R 0775 ${BIND_DIR}
   chown -R ${BIND_USER}:${BIND_USER} ${BIND_DIR}  
-
 }
 
 create_pid_dir() {
