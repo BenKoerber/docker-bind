@@ -6,43 +6,43 @@ set_environment_variable_defaults() {
   # Source of the initial bind configuration (/etc/bind). Values
   ## - alpine:  use files shipped with alpine 
   ## - image:   use files shipped with image (image/etc/bind)
-  ## - custom:  use files of directory ${BIND_CUSTOM_CONFIG_DIR}
+  ## - custom:  use files of directory ${BIND_TEMPLATE_CUSTOM_DIR}
   BIND_INITIAL_CONFIG=${BIND_INITIAL_CONFIG:-image} 
-  # Source directories of custom configuration files  
-  BIND_CUSTOM_CONFIG_DIR=${BIND_CUSTOM_CONFIG_DIR:-/config/custom} 
+  # Source directories of custom template files  
+  BIND_TEMPLATE_CUSTOM_DIR=${BIND_TEMPLATE_CUSTOM_DIR:-/config/template/custom/etc/bind}
 }
 
 create_bind_dirs() {
-  mkdir -p ${BIND_CONFIG_DIR}
+  mkdir -p ${BIND_DIR}
 
   # populate default bind configuration directory if it does not exist and link it
-  if [ ! -d ${BIND_CONFIG_DIR}/etc/bind ]; then
-    mkdir -p ${BIND_CONFIG_DIR}/etc
+  if [ ! -d ${BIND_DIR}/etc/bind ]; then
+    mkdir -p ${BIND_DIR}/etc
     case ${BIND_INITIAL_CONFIG} in
       alpine)
-        mv /etc/bind ${BIND_CONFIG_DIR}/etc
+        mv /etc/bind ${BIND_DIR}/etc
         ;;
       image)
-        cp -r /config/image/etc/bind ${BIND_CONFIG_DIR}/etc/
+        cp -r ${BIND_TEMPLATE_IMAGE_DIR} ${BIND_DIR}/etc/
         ;;
       custom)
-        cp -r ${BIND_CUSTOM_CONFIG_DIR} ${BIND_CONFIG_DIR}/etc/
+        cp -r ${BIND_TEMPLATE_CUSTOM_DIR} ${BIND_DIR}/etc/
         ;;
     esac
   fi
   rm -rf /etc/bind
-  ln -sf ${BIND_CONFIG_DIR}/etc/bind /etc/bind
+  ln -sf ${BIND_DIR}/etc/bind /etc/bind
 
   # link default bind lib directory
-  if [ ! -d ${BIND_CONFIG_DIR}/var/lib/bind ]; then
-    mkdir -p ${BIND_CONFIG_DIR}/var/lib/bind
+  if [ ! -d ${BIND_DIR}/var/lib/bind ]; then
+    mkdir -p ${BIND_DIR}/var/lib/bind
   fi
   rm -rf /var/lib/bind
-  ln -sf ${BIND_CONFIG_DIR}/var/lib/bind /var/lib/bind
+  ln -sf ${BIND_DIR}/var/lib/bind /var/lib/bind
 
   # set permissions and ownership
-  chmod -R 0775 ${BIND_CONFIG_DIR}
-  chown -R ${BIND_USER}:${BIND_USER} ${BIND_CONFIG_DIR}  
+  chmod -R 0775 ${BIND_DIR}
+  chown -R ${BIND_USER}:${BIND_USER} ${BIND_DIR}  
 
 }
 

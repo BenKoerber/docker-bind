@@ -5,13 +5,15 @@ FROM alpine:3.8
 # Name of the bind user
 ENV BIND_USER named
 # Directory in which all bind config is saved
-ENV BIND_CONFIG_DIR /config/bind 
+ENV BIND_DIR /config/bind 
+# Image directory
+ENV BIND_TEMPLATE_IMAGE_DIR /config/template/image/etc/bind
 
 # Update and install bind
 RUN apk --update add bind
 
 # Copy image files to container
-COPY image/etc/bind/* /config/image/etc/bind/
+COPY image/etc/bind/* /config/template/image/etc/bind/
 
 # Bind need both protocols tcp and udp on port 53
 EXPOSE 53/udp
