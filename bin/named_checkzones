@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# honor debug flag
+if [ "$DEBUG" == "1" ]; then
+  set -x
+fi
+
+set -e
+
+SCRIPT_NAME=$0
+
+# parameters
+# check parameters $1=CLIENTNAME, $2=NOPASS
+if [ ! $# -eq 2 ]; then
+    echo "No arguments supplied."
+    echo "Please invoke: $SCRIPT_NAME <ZONE> <ZONEFILE>"
+    exit 1
+fi
+ZONE=$1
+ZONEFILE=$2
+
+
+# checkzone
+named-checkzone $ZONE $ZONEFILE

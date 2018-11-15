@@ -25,6 +25,10 @@ COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
 ENTRYPOINT ["/sbin/entrypoint.sh"]
 
+# Copy provided scripts
+ADD ./bin /usr/local/bin
+RUN chmod a+x /usr/local/bin/*
+
 # Default command
 CMD ["/usr/sbin/named"]
 
